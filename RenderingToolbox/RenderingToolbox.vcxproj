@@ -126,6 +126,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\math01\Mat4.cpp" />
+    <ClCompile Include="src\math01\Quaternion.cpp" />
+    <ClCompile Include="src\math01\Vec3.cpp" />
+    <ClCompile Include="src\math01\Vec4.cpp" />
     <ClCompile Include="src\opengl\Shader.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_demo.cpp" />
@@ -142,9 +146,11 @@
     <ClInclude Include="include\GLFW\glfw3.h" />
     <ClInclude Include="include\GLFW\glfw3native.h" />
     <ClInclude Include="src\math\CustomMath.h" />
+    <ClInclude Include="src\math01\Mat4.h" />
     <ClInclude Include="src\math\Matrix4x4.h" />
-    <ClInclude Include="src\math\Vec3.h" />
-    <ClInclude Include="src\math\Vec4.h" />
+    <ClInclude Include="src\math01\Quaternion.h" />
+    <ClInclude Include="src\math01\Vec3.h" />
+    <ClInclude Include="src\math01\Vec4.h" />
     <ClInclude Include="src\opengl\Shader.h" />
     <ClInclude Include="src\vendor\imgui\imconfig.h" />
     <ClInclude Include="src\vendor\imgui\imgui.h" />

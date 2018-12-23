@@ -11,6 +11,9 @@
 #include "stb_image.h"
 #include "customMath.h"
 
+#include "math01/Vec3.h"
+#include "math01/Mat4.h"
+
 float r = 0;
 
 float xPosition = 0;
@@ -41,7 +44,7 @@ static void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 		xPosition += (xpos - prevX);
 		yPosition += (ypos - prevY);
 
-		std::cout << (xpos - prevX) << std::endl;
+		
 
 		prevX = xpos;
 		prevY = ypos;
@@ -76,7 +79,7 @@ int main(void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(1500, 1000, "Hello World", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -203,16 +206,47 @@ int main(void)
 
 
 
-	mat4 proj;
-	//proj.orthoProj(0, 640.0f, 0, 480.0f, 0.0f, 1000.0f);
-	proj.perspectiveProjection(100.0f, 0.1f, 70.0f, 64.0f / 48.0f);
+	Mat4 proj = Mat4::Perspective(70.0f,1.5f,0.1f,100.0f);
 
 
 	
 
 	unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "proj");
-	glUniformMatrix4fv(transformLoc, 1, GL_TRUE, proj.dataPointer());
+	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, proj.DataPointer());
 
+
+
+	Vec3 vec;
+	vec.x = 10;
+	vec.y = 10;
+
+	Vec3 vec2;
+	vec2.x = 10;
+
+	vec2.y = 10;
+
+	Vec4 v4(1.0f,0.0f,0.0f,0.0f);
+
+	Vec3 v3(1,0,0);
+	Vec3 v5(0,1,0);
+
+	v3 = v3 + v5 * 10;
+
+	
+
+	Mat4 one(200);
+	Mat4 two;
+
+	Mat4 three = one * two;
+
+	v4 = one * v4;
+
+	std::cout << v3.y;
+
+
+
+
+	vec.Normalize();
 
 
 	
@@ -228,43 +262,41 @@ int main(void)
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		mat4 henk;	
-		mat4 rot;
-		mat4 rot2;
-		mat4 transfomers;
+		Mat4 henk(1.0);
+		Mat4 rot(1.0);
+		Mat4 rot2(1.0);
+		Mat4 transfomers(1.0);
 
+		henk = Mat4::Scale(Vec3(1.0f, 1.0f, 1.0f));
 
-		transfomers.translateMatrix(0, 0,0);
+		//rot = Mat4::Rotate();
+		//rot2 = Mat4::Rotate();
 
-		rot2.rotateMatrixAngleAxis(1, 0, 0, -yPosition * 0.1f);
-		
-		rot.rotateMatrixAngleAxis(0,1,0, xPosition * 0.1f);
-		
-		rot *= rot2;
+		Quaternion q1 = Quaternion::AngleAxis(yPosition * 0.1f, Vec3(1, 0, 0));
+		Quaternion q2 = Quaternion::AngleAxis(xPosition * 0.1f, Vec3(0, 1, 0));
 
-		rot.translateMatrix(0, 0, -2.5f);
-
-		//transfomers *= rot;
-
-		henk = rot;
-
-
-
-
-		
-
-		
-
-		
 	
+
+		Quaternion q3 = q1.Multiply(q2);
 		
-		GLfloat* test = henk.dataPointer();
+		transfomers = Mat4::Translate(Vec3(0, 0, -2.5f));
+		
+		rot2 = Mat4::Rotate(q3);
+		rot2 *= transfomers;
+		
+		
+		henk *= rot2;
+
+		
+		GLfloat* test = henk.DataPointer();
 		unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
-		glUniformMatrix4fv(transformLoc, 1, GL_TRUE, test);
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, test);
 
 
 
 		glDrawArrays(GL_TRIANGLES,0,36);
+
+
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
