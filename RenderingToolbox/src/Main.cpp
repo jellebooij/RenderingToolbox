@@ -9,10 +9,11 @@
 #include <GLFW/glfw3.h> 
 #include "Shader.h"
 #include "stb_image.h"
-#include "customMath.h"
 
-#include "math01/Vec3.h"
-#include "math01/Mat4.h"
+#include "math/Vec3.h"
+#include "math/Mat4.h"
+
+#include "Application/Window.h"
 
 float r = 0;
 
@@ -72,32 +73,20 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
 int main(void)
 {
-	GLFWwindow* window;
 
 	/* Initialize the library */
-	if (!glfwInit())
-		return -1;
+	Window win("Hello world", 1200.0f, 800.0f);
+	win.Create();
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(1500, 1000, "Hello World", NULL, NULL);
-	if (!window)
-	{
-		glfwTerminate();
-		return -1;
-	}
+	
 
 	/* Make the window's context current */
-	glfwMakeContextCurrent(window);
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	glfwSetScrollCallback(window, scroll_callback);
-	glfwSetCursorPosCallback(window, cursor_pos_callback);
-	glfwSetMouseButtonCallback(window, mouse_button_callback);
 
-
-	glewInit();
-
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	glEnable(GL_DEPTH_TEST);
+	//glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	//glfwSetScrollCallback(window, scroll_callback);
+	//glfwSetCursorPosCallback(window, cursor_pos_callback);
+	//glfwSetMouseButtonCallback(window, mouse_button_callback);
 
 
 	float vertices[] = {
@@ -216,40 +205,6 @@ int main(void)
 
 
 
-	Vec3 vec;
-	vec.x = 10;
-	vec.y = 10;
-
-	Vec3 vec2;
-	vec2.x = 10;
-
-	vec2.y = 10;
-
-	Vec4 v4(1.0f,0.0f,0.0f,0.0f);
-
-	Vec3 v3(1,0,0);
-	Vec3 v5(0,1,0);
-
-	v3 = v3 + v5 * 10;
-
-	
-
-	Mat4 one(200);
-	Mat4 two;
-
-	Mat4 three = one * two;
-
-	v4 = one * v4;
-
-	std::cout << v3.y;
-
-
-
-
-	vec.Normalize();
-
-
-	
 
 
 
@@ -257,10 +212,10 @@ int main(void)
 
 
 	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(window))
+	while (!win.isClosed())
 	{
 		/* Render here */
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		win.Clear();
 		
 		Mat4 henk(1.0);
 		Mat4 rot(1.0);
@@ -297,12 +252,7 @@ int main(void)
 		glDrawArrays(GL_TRIANGLES,0,36);
 
 
-
-		/* Swap front and back buffers */
-		glfwSwapBuffers(window);
-
-		/* Poll for and process events */
-		glfwPollEvents();
+		win.Update();
 	}
 
 	glfwTerminate();
