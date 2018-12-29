@@ -1,4 +1,6 @@
 #include "Window.h"
+#include "Events/ApplicationEvents.h"
+#include "Events/InputEvents.h"
 
 Window::Window(const char * name, int width, int height) :
 	name(name), width(width), height(height) {}
@@ -32,7 +34,71 @@ bool Window::Create()
 	}
 
 	glfwMakeContextCurrent(window);
-	glfwSetWindowUserPointer(window, this);
+	glfwSwapInterval(0);
+	glfwSetWindowUserPointer(window, &data);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+
+	glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+		switch (action) {
+
+			case(GLFW_PRESS):
+			{
+				KeyEvent e(key, KeyEvent::KeyAction::KeyPress);
+				data.callback(e);
+				break;
+			}
+
+			case(GLFW_RELEASE):
+			{
+				KeyEvent e(key, KeyEvent::KeyAction::KeyRelease);
+				data.callback(e);
+				break;
+			}
+
+			default: 
+			{
+				break;
+			}
+		}
+		
+	});
+	glfwSetWindowCloseCallback(window, [](GLFWwindow* window) {
+		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+		OnWindowCloseEvent e;
+		data.callback(e);
+	});
+	glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xpos, double ypos) {
+		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+		MouseMovementEvent e(Vec2((float)xpos,(float)ypos));
+		data.callback(e);
+	});
+	glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
+		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+		switch (action) {
+
+		case(GLFW_PRESS):
+		{
+			MouseButtonEvent e(button, MouseButtonEvent::Actions::ButtonPressed);
+			data.callback(e);
+			break;
+		}
+
+		case(GLFW_RELEASE):
+		{
+			MouseButtonEvent e(button, MouseButtonEvent::Actions::ButtonReleased);
+			data.callback(e);
+			break;
+		}
+
+		default:
+		{
+			break;
+		}
+		}
+	});
 
 
 	glewInit();
@@ -62,4 +128,4 @@ bool Window::isClosed()
 
 
 
-//Callbacks
+

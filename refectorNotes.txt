@@ -1,0 +1,10 @@
+- Event dispatcher and Event callback system are (in theory) very slow. This is mainly caused by the use of std::function and std::Bind
+- Switch camera to transform component when i have that 
+
+
+
+
+
+Problems:
+
+Can't pause because of glfwSwapBuffers(window) in window->update function.

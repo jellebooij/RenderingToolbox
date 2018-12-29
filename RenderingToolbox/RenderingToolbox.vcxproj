@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)RenderingToolbox\include;$(SolutionDir)RenderingToolbox\src;$(SolutionDir)RenderingToolbox\src\vendor;$(SolutionDir)RenderingToolbox\src\opengl;$(SolutionDir)RenderingToolbox\src\math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)RenderingToolbox\include;$(SolutionDir)RenderingToolbox\src;$(SolutionDir)RenderingToolbox\src\vendor;$(SolutionDir)RenderingToolbox\src\opengl;$(SolutionDir)RenderingToolbox\src\math;$(SolutionDir)RenderingToolbox\src\vendor\spdlog;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -90,6 +90,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)RenderingToolbox\include;$(SolutionDir)RenderingToolbox\src;$(SolutionDir)RenderingToolbox\src\vendor;$(SolutionDir)RenderingToolbox\src\opengl;$(SolutionDir)RenderingToolbox\src\math;$(SolutionDir)RenderingToolbox\src\vendor\spdlog;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -100,7 +101,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)RenderingToolbox\include;$(SolutionDir)RenderingToolbox\src;$(SolutionDir)RenderingToolbox\src\vendor;$(SolutionDir)RenderingToolbox\src\opengl;$(SolutionDir)RenderingToolbox\src\math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)RenderingToolbox\include;$(SolutionDir)RenderingToolbox\src;$(SolutionDir)RenderingToolbox\src\vendor;$(SolutionDir)RenderingToolbox\src\opengl;$(SolutionDir)RenderingToolbox\src\math;$(SolutionDir)RenderingToolbox\src\vendor\spdlog;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -118,6 +119,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)RenderingToolbox\include;$(SolutionDir)RenderingToolbox\src;$(SolutionDir)RenderingToolbox\src\vendor;$(SolutionDir)RenderingToolbox\src\opengl;$(SolutionDir)RenderingToolbox\src\math;$(SolutionDir)RenderingToolbox\src\vendor\spdlog;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -125,13 +127,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Application\Application.cpp" />
+    <ClCompile Include="src\Application\Input.cpp" />
     <ClCompile Include="src\Application\Window.cpp" />
+    <ClCompile Include="src\Graphics\VirtualCamera.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Math\Mat4.cpp" />
     <ClCompile Include="src\Math\Quaternion.cpp" />
+    <ClCompile Include="src\Math\Vec2.cpp" />
     <ClCompile Include="src\Math\Vec3.cpp" />
     <ClCompile Include="src\Math\Vec4.cpp" />
     <ClCompile Include="src\Opengl\Shader.cpp" />
+    <ClCompile Include="src\Utility\Log.cpp" />
+    <ClCompile Include="src\Utility\Time.cpp" />
     <ClCompile Include="src\Vendor\imgui\imgui.cpp" />
     <ClCompile Include="src\Vendor\imgui\imgui_demo.cpp" />
     <ClCompile Include="src\Vendor\imgui\imgui_draw.cpp" />
@@ -146,12 +154,23 @@
   <ItemGroup>
     <ClInclude Include="include\GLFW\glfw3.h" />
     <ClInclude Include="include\GLFW\glfw3native.h" />
+    <ClInclude Include="src\Application\Application.h" />
+    <ClInclude Include="src\Application\Input.h" />
     <ClInclude Include="src\Application\Window.h" />
+    <ClInclude Include="src\Events\ApplicationEvents.h" />
+    <ClInclude Include="src\Events\Event.h" />
+    <ClInclude Include="src\Events\EventDispatcher.h" />
+    <ClInclude Include="src\Events\InputEvents.h" />
+    <ClInclude Include="src\Graphics\VirtualCamera.h" />
     <ClInclude Include="src\Math\Mat4.h" />
     <ClInclude Include="src\Math\Quaternion.h" />
+    <ClInclude Include="src\Math\Vec2.h" />
     <ClInclude Include="src\Math\Vec3.h" />
     <ClInclude Include="src\Math\Vec4.h" />
     <ClInclude Include="src\Opengl\Shader.h" />
+    <ClInclude Include="src\Utility\FunctionTimer.h" />
+    <ClInclude Include="src\Utility\Log.h" />
+    <ClInclude Include="src\Utility\Time.h" />
     <ClInclude Include="src\Vendor\imgui\imconfig.h" />
     <ClInclude Include="src\Vendor\imgui\imgui.h" />
     <ClInclude Include="src\Vendor\imgui\imgui_impl_glfw.h" />

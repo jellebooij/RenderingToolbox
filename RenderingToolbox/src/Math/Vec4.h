@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include <iostream>
+#include "Vec3.h"
 
 class Vec4 {
 
@@ -10,6 +11,7 @@ public:
 
 	Vec4();
 	Vec4(float x, float y, float z, float w);
+	Vec4(const Vec3& a);
 	Vec4(const Vec4& a);
 
 	float Magnitude() const;

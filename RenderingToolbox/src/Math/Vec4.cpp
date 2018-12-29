@@ -6,7 +6,9 @@ Vec4::Vec4() : x(.0f), y(.0f), z(.0f), w(.0f){}
 
 Vec4::Vec4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
 
-Vec4::Vec4(const Vec4 & a) : x(a.x), y(a.y), z(a.z), w(a.w) {}
+Vec4::Vec4(const Vec3 & a) : x(a.x), y(a.y), z(a.z), w(1.0f){}
+
+Vec4::Vec4(const Vec4& a) : x(a.x), y(a.y), z(a.z), w(a.w) {}
 
 float Vec4::Magnitude() const
 {
@@ -38,10 +40,10 @@ Vec4 Vec4::Multiply(const Mat4 & transform)
 	Vec4 input = *this;
 	Vec4 result;
 
-	result.x = input.x * transform.data[0] + input.y * transform.data[4] + input.z * transform.data[8] + input.w * transform.data[12];
-	result.y = input.x * transform.data[1] + input.y * transform.data[5] + input.z * transform.data[9] + input.w * transform.data[13];
-	result.z = input.x * transform.data[2] + input.y * transform.data[6] + input.z * transform.data[10] + input.w * transform.data[14];
-	result.w = input.x * transform.data[3] + input.y * transform.data[7] + input.z * transform.data[11] + input.w * transform.data[15];
+	result.x = input.x * transform.data[0] + input.y * transform.data[1] + input.z * transform.data[2] + input.w * transform.data[3];
+	result.y = input.x * transform.data[4] + input.y * transform.data[5] + input.z * transform.data[6] + input.w * transform.data[7];
+	result.z = input.x * transform.data[8] + input.y * transform.data[9] + input.z * transform.data[10] + input.w * transform.data[11];
+	result.w = input.x * transform.data[12] + input.y * transform.data[13] + input.z * transform.data[14] + input.w * transform.data[15];
 
 	return result;
 }
