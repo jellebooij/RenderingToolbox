@@ -45,6 +45,12 @@
     <ClInclude Include="src\Application\Application.h">
       <Filter>Application</Filter>
     </ClInclude>
+    <ClInclude Include="src\Application\Core.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\EntryPoint.h">
+      <Filter>Application</Filter>
+    </ClInclude>
     <ClInclude Include="src\Application\Input.h">
       <Filter>Application</Filter>
     </ClInclude>
@@ -81,6 +87,7 @@
     <ClInclude Include="src\Math\Vec4.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="src\RenderBox.h" />
     <ClInclude Include="src\Utility\FunctionTimer.h">
       <Filter>Utility</Filter>
     </ClInclude>
@@ -89,6 +96,9 @@
     </ClInclude>
     <ClInclude Include="src\Utility\Time.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opengl\glShader.h">
+      <Filter>opengl</Filter>
     </ClInclude>
     <ClInclude Include="src\vendor\imgui\imconfig.h">
       <Filter>vendor\imgui</Filter>
@@ -264,12 +274,6 @@
     <ClInclude Include="src\vendor\stb_image.h">
       <Filter>vendor</Filter>
     </ClInclude>
-    <ClInclude Include="src\opengl\glShader.h">
-      <Filter>opengl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Application\Core.h" />
-    <ClInclude Include="src\RenderBox.h" />
-    <ClInclude Include="src\Application\EntryPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application\Application.cpp">
@@ -306,6 +310,9 @@
     <ClCompile Include="src\Utility\Time.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
+    <ClCompile Include="src\opengl\glShader.cpp">
+      <Filter>opengl</Filter>
+    </ClCompile>
     <ClCompile Include="src\vendor\imgui\imgui.cpp">
       <Filter>vendor\imgui</Filter>
     </ClCompile>
@@ -327,15 +334,5 @@
     <ClCompile Include="src\vendor\stb_image.cpp">
       <Filter>vendor</Filter>
     </ClCompile>
-    <ClCompile Include="src\opengl\glShader.cpp">
-      <Filter>opengl</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="imgui.ini" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="lib\glew32s.lib" />
-    <Library Include="lib\glfw3.lib" />
   </ItemGroup>
 </Project>

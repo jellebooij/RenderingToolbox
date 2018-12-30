@@ -9,7 +9,7 @@
 
 namespace Rb {
 
-	class RB_API Window {
+	class Window {
 
 	public:
 		Window(const char *name, int width, int height);
