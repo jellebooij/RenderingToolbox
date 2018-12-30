@@ -1,46 +1,73 @@
 workspace "RenderBox"
-    architecture "x86_64"
+    architecture "x86"
 
-    configutations{
+    configurations{
         "Debug",
         "Release",
         "Dist"
     }
 
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}-"
+    buildoptions "/MD"
+
+outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 project "RenderBox"
     location "RenderBox"
-    kind "WindowedApp"
+    kind "ConsoleApp"
     language "C++"
 
-    targetdir("bin/".. outputdir .. "/%{prj.name}")
-    objdir("bin-int/".. outputdir .. "/%{prj.name}")
+    targetdir ("bin/".. outputdir .. "/%{prj.name}")
+    objdir ("bin-int/".. outputdir .. "/%{prj.name}")
 
-    files{
-
-        "%{prj.name}/src/**.h"
+    files
+    {
+        "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp"
-
     }
 
-    include{
-        "%{prj.name}/src/vendor/spdlog"
-        "%{prj.name}/include"
+    includedirs
+    {
+        "%{prj.name}/src/vendor/spdlog",
+        "%{prj.name}/include",
+
+        "%{prj.name}/src/Vendor",
+        "%{prj.name}/src/Opengl",
+
+        "%{prj.name}/src"
     }
 
-    filer "system::windows"
+    libdirs 
+    { 
+        "%{prj.name}/lib" 
+    }
+
+    filter "system:windows"
         cppdialect "C++17"
-        staticruntime "On"
+        staticruntime "off"
         systemversion "latest"
     
-        defines{
-            "GLEW_STATIC"
+        defines
+        {
+            "PLATFORM_WINDOWS",
+            "BUILD_DLL",
+            "GLEW_STATIC",
+            "_MBCS"
         }
 
-        links {
-            "glfw3"
-            "opengl32"
-            "glew32s"
+        postbuildcommands
+        {
+            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Game")
         }
+
+        links 
+        {
+            "glfw3.lib",
+            "opengl32.lib",
+            "glew32s.lib"
+        }
+
+    filter "configurations:Debug" 
+        symbols "On"
+        runtime "Debug"
+        staticruntime "off"
     
