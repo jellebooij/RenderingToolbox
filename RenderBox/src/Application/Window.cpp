@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "Events/ApplicationEvents.h"
 #include "Events/InputEvents.h"
+#include "Utility/Log.h"
 
 namespace Rb {
 
@@ -20,6 +21,9 @@ namespace Rb {
 
 	bool Window::Create()
 	{
+
+		LOG_INFO("Creating window");
+
 		if (!glfwInit())
 		{
 			//TODO: Log Error
@@ -107,6 +111,9 @@ namespace Rb {
 
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
+
+		LOG_INFO("Creating window succeeded");
 
 		return true;
 	}

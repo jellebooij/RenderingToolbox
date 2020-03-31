@@ -10,13 +10,18 @@ namespace Rb {
 
 	Time::Time()
 	{
-		start = std::chrono::high_resolution_clock::now();
-		lastFrame = start;
+
 	}
 
 	float Time::GetDeltaTime()
 	{
 		return deltaTime;
+	}
+
+	void Time::Init()
+	{	
+		start = std::chrono::high_resolution_clock::now();
+		lastFrame = start;
 	}
 
 	void Time::Update()

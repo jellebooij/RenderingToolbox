@@ -2,14 +2,21 @@
 #include "Events/EventDispatcher.h"
 #include "Events/InputEvents.h"
 
-#include "glShader.h"
+#include "Opengl/Shader.h"
+#include "Opengl/Texture.h"
+#include "Opengl/Mesh.h"
+
 #include "stb_image.h"
 
 #include "Math/Vec3.h"
 #include "Math/Mat4.h"
 
-#include "Graphics/VirtualCamera.h"
+#include "Graphics/Camera/VirtualCamera.h"
 #include "Utility/Log.h"
+#include "Opengl/Renderer.h"
+
+#include "Game/LevelGeneration.h"
+#include "Game/World.h"
 
 
 namespace Rb {
@@ -19,11 +26,16 @@ namespace Rb {
 
 	Application::Application()
 	{
+		Log::Init();
+		time->Init();
+
+
 		window = std::make_unique<Window>("Hello world", 1200.0f, 800.0f);
 		window->Create();
 		window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
 		input = std::make_shared<Input>();
+		
 
 		//Run();
 	}
@@ -33,55 +45,50 @@ namespace Rb {
 	void Application::Run()
 	{
 
-		Log::Init();
-		LOG_ERROR("poepie");
-		LOG_INFO("poepie");
-		LOG_WARN("poepie");
-		LOG_TRACE("poepie");
+		Vertex vertices[] = {
 
 
-		float vertices[] = {
-			-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-			 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-			-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-			-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-			-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+			Vertex(Vec3(-0.5f, -0.5f, -0.5f), Vec2( 0.0f, 0.0f)),
+			Vertex(Vec3( 0.5f, -0.5f, -0.5f), Vec2( 1.0f, 0.0f)),
+			Vertex(Vec3( 0.5f,  0.5f, -0.5f), Vec2( 1.0f, 1.0f)),
+			Vertex(Vec3( 0.5f,  0.5f, -0.5f), Vec2( 1.0f, 1.0f)),
+			Vertex(Vec3(-0.5f,  0.5f, -0.5f), Vec2( 0.0f, 1.0f)),
+			Vertex(Vec3(-0.5f, -0.5f, -0.5f), Vec2( 0.0f, 0.0f)),
+										
+			Vertex(Vec3(-0.5f, -0.5f,  0.5f), Vec2( 0.0f, 0.0f)),
+			Vertex(Vec3( 0.5f, -0.5f,  0.5f), Vec2( 1.0f, 0.0f)),
+			Vertex(Vec3( 0.5f,  0.5f,  0.5f), Vec2( 1.0f, 1.0f)),
+			Vertex(Vec3( 0.5f,  0.5f,  0.5f), Vec2( 1.0f, 1.0f)),
+			Vertex(Vec3(-0.5f,  0.5f,  0.5f), Vec2( 0.0f, 1.0f)),
+			Vertex(Vec3(-0.5f, -0.5f,  0.5f), Vec2( 0.0f, 0.0f)),
+											
+			Vertex(Vec3(-0.5f,  0.5f,  0.5f), Vec2( 1.0f, 0.0f)),
+			Vertex(Vec3(-0.5f,  0.5f, -0.5f), Vec2( 1.0f, 1.0f)),
+			Vertex(Vec3(-0.5f, -0.5f, -0.5f), Vec2( 0.0f, 1.0f)),
+			Vertex(Vec3(-0.5f, -0.5f, -0.5f), Vec2( 0.0f, 1.0f)),
+			Vertex(Vec3(-0.5f, -0.5f,  0.5f), Vec2( 0.0f, 0.0f)),
+			Vertex(Vec3(-0.5f,  0.5f,  0.5f), Vec2( 1.0f, 0.0f)),
+											
+			Vertex(Vec3( 0.5f,  0.5f,  0.5f), Vec2( 1.0f, 0.0f)),
+			Vertex(Vec3( 0.5f,  0.5f, -0.5f), Vec2( 1.0f, 1.0f)),
+			Vertex(Vec3( 0.5f, -0.5f, -0.5f), Vec2( 0.0f, 1.0f)),
+			Vertex(Vec3( 0.5f, -0.5f, -0.5f), Vec2( 0.0f, 1.0f)),
+			Vertex(Vec3( 0.5f, -0.5f,  0.5f), Vec2( 0.0f, 0.0f)),
+			Vertex(Vec3( 0.5f,  0.5f,  0.5f), Vec2( 1.0f, 0.0f)),
+										
+			Vertex(Vec3(-0.5f, -0.5f, -0.5f), Vec2( 0.0f, 1.0f)),
+			Vertex(Vec3( 0.5f, -0.5f, -0.5f), Vec2( 1.0f, 1.0f)),
+			Vertex(Vec3( 0.5f, -0.5f,  0.5f), Vec2( 1.0f, 0.0f)),
+			Vertex(Vec3( 0.5f, -0.5f,  0.5f), Vec2( 1.0f, 0.0f)),
+			Vertex(Vec3(-0.5f, -0.5f,  0.5f), Vec2( 0.0f, 0.0f)),
+			Vertex(Vec3(-0.5f, -0.5f, -0.5f), Vec2( 0.0f, 1.0f)),
+										
+			Vertex(Vec3(-0.5f,  0.5f, -0.5f), Vec2( 0.0f, 1.0f)),
+			Vertex(Vec3( 0.5f,  0.5f, -0.5f), Vec2( 1.0f, 1.0f)),
+			Vertex(Vec3( 0.5f,  0.5f,  0.5f), Vec2( 1.0f, 0.0f)),
+			Vertex(Vec3( 0.5f,  0.5f,  0.5f), Vec2( 1.0f, 0.0f)),
+			Vertex(Vec3(-0.5f,  0.5f,  0.5f), Vec2( 0.0f, 0.0f)),
+			Vertex(Vec3(-0.5f,  0.5f, -0.5f), Vec2( 0.0f, 1.0f))
 		};
 
 		unsigned int indices[] = {
@@ -89,69 +96,39 @@ namespace Rb {
 			1, 2, 3
 		};
 
-		glShader ourShader("res/shaders/test.shader");
+		Shader ourShader("res/shaders/test.shader");
 
-		unsigned int VAO;
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
+		Texture floor("res/textures/atlas.png");
 
 
-		unsigned int vbo;
-		glCreateBuffers(1, &vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-		unsigned int ebo;
-		glGenBuffers(1, &ebo);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
-
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);
-
-		int width, height, nrChannels;
-		unsigned char *data = stbi_load("res/textures/container.jpg", &width, &height, &nrChannels, 0);
-
-		unsigned int texture;
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-
-		stbi_image_free(data);
+		
 
 		VirtualCamera camera;
 
-		unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "proj");
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, camera.GetProjectionMatrix().DataPointer());
+		ourShader.setMat4("proj", camera.GetProjectionMatrix());
 
 		Vec2 Position;
 		float deltaTime = 0.0f;
+
+		Renderer renderer;
+
+		float x = 0;
+
+		LevelGenerator generator(3.0f);
+
+		std::vector<Vertex> buffer;
+		World world("res/textures/level.png",3.0f);
+		generator.GenerateLevel(world,&buffer);
+
+
+		//Mesh mesh(std::vector<Vertex>(&vertices[0], &vertices[6 * 6]));
+		Mesh mesh(buffer);
 
 
 
 		while (running) {
 			window->Clear();
-
-			Mat4 henk(1.0);
-			Mat4 rot(1.0);
-			Mat4 rot2(1.0);
-			Mat4 transfomers(1.0);
-
-			henk = Mat4::Scale(Vec3(10.0f, 1.0f, 1.0f));
-
-			//rot = Mat4::Rotate();
-			//rot2 = Mat4::Rotate();
-
 
 			Position += Input::GetMousePositionRelative();
 
@@ -161,25 +138,31 @@ namespace Rb {
 			Quaternion q3 = q1.Multiply(q2);
 
 			camera.SetRotation(q3);
-			camera.Translate(Vec3(Input::GetVertical(), 0.0f, -Input::GetHorizontal()) * deltaTime * 3);
 
-			//std::cout << Input::GetHorizontal() << "   " << Input::GetVertical() << std::endl;
+			Vec3 translation = Vec3(Input::GetHorizontal(), 0.0f, -Input::GetVertical()) * deltaTime * 3;
+			std::cout << Input::GetVertical() << "  " << translation.z << std::endl;
+			
+			if (world.IsPositionFree(camera.position + Vec3(translation.x, 0, 0))) {
+				camera.Translate(Vec3(translation.x, 0, 0));
+			}
+			if (world.IsPositionFree(camera.position + Vec3(0,translation.y, 0))) {
+				camera.Translate(Vec3(0, translation.y, 0));
+			}
+			if (world.IsPositionFree(camera.position + Vec3(0,0,translation.z))) {
+				camera.Translate(Vec3(0, 0,translation.z));
+			}
 
-			transfomers = Mat4::Translate(Vec3(0, 0, -2.5f));
+			//camera.position = Vec3(10, 3, 10);
 
-			rot2 = Mat4::Rotate(q3);
-			rot2 *= transfomers;
+			glVertex2i(10, 10);
 
-			henk = transfomers;
+			float d = Time::GetDeltaTime();
 
-			GLfloat* test = henk.DataPointer();
-			unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
-			glUniformMatrix4fv(transformLoc, 1, GL_FALSE, test);
+			ourShader.setMat4("view", camera.GetViewMatrix());
 
-			transformLoc = glGetUniformLocation(ourShader.ID, "view");
-			glUniformMatrix4fv(transformLoc, 1, GL_FALSE, camera.GetViewMatrix().DataPointer());
+			//ourShader.setMat4("view", Mat4(1.0f));
 
-			glDrawArrays(GL_TRIANGLES, 0, 36);
+			renderer.Draw(mesh, ourShader, floor, Mat4(1.0f));
 
 			window->Update();
 			input->Update();
@@ -188,9 +171,6 @@ namespace Rb {
 			if (Input::GetKey(256)) {
 				running = false;
 			}
-
-
-
 
 			deltaTime = Time::GetDeltaTime();
 		}

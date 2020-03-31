@@ -69,9 +69,6 @@
     <ClInclude Include="src\Events\InputEvents.h">
       <Filter>Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\VirtualCamera.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Math\Mat4.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -96,9 +93,6 @@
     </ClInclude>
     <ClInclude Include="src\Utility\Time.h">
       <Filter>Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\glShader.h">
-      <Filter>opengl</Filter>
     </ClInclude>
     <ClInclude Include="src\vendor\imgui\imconfig.h">
       <Filter>vendor\imgui</Filter>
@@ -274,6 +268,19 @@
     <ClInclude Include="src\vendor\stb_image.h">
       <Filter>vendor</Filter>
     </ClInclude>
+    <ClInclude Include="src\Graphics\Camera\VirtualCamera.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Opengl\Shader.h">
+      <Filter>opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Opengl\Texture.h" />
+    <ClInclude Include="src\Opengl\Mesh.h" />
+    <ClInclude Include="src\Opengl\Debug.h" />
+    <ClInclude Include="src\Opengl\Renderer.h" />
+    <ClInclude Include="src\Game\LevelGeneration.h" />
+    <ClInclude Include="src\Graphics\Image.h" />
+    <ClInclude Include="src\Game\World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application\Application.cpp">
@@ -284,9 +291,6 @@
     </ClCompile>
     <ClCompile Include="src\Application\Window.cpp">
       <Filter>Application</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\VirtualCamera.cpp">
-      <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Math\Mat4.cpp">
@@ -310,9 +314,6 @@
     <ClCompile Include="src\Utility\Time.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
-    <ClCompile Include="src\opengl\glShader.cpp">
-      <Filter>opengl</Filter>
-    </ClCompile>
     <ClCompile Include="src\vendor\imgui\imgui.cpp">
       <Filter>vendor\imgui</Filter>
     </ClCompile>
@@ -334,5 +335,18 @@
     <ClCompile Include="src\vendor\stb_image.cpp">
       <Filter>vendor</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Camera\VirtualCamera.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Opengl\Shader.cpp">
+      <Filter>opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Opengl\Texture.cpp" />
+    <ClCompile Include="src\Opengl\Mesh.cpp" />
+    <ClCompile Include="src\Opengl\Debug.cpp" />
+    <ClCompile Include="src\Opengl\Renderer.cpp" />
+    <ClCompile Include="src\Game\LevelGeneration.cpp" />
+    <ClCompile Include="src\Graphics\Image.cpp" />
+    <ClCompile Include="src\Game\World.cpp" />
   </ItemGroup>
 </Project>

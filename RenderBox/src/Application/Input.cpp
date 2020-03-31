@@ -72,14 +72,14 @@ namespace Rb {
 		return relativeMousePos;
 	}
 
-	float Input::GetHorizontal()
-	{
-		return (int)keyState[83] - (int)keyState[87];
-	}
-
 	float Input::GetVertical()
 	{
-		return (int)keyState[65] - (int)keyState[68];
+		return (int)keyState[87] - (int)keyState[83];
+	}
+
+	float Input::GetHorizontal()
+	{
+		return (int)keyState[68] - (int)keyState[65];
 	}
 
 	void Input::Update()

@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PLATFORM_WINDOWS;BUILD_DLL;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src\vendor\spdlog;include;src\Vendor;src\Opengl;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src\vendor\spdlog;include;src\Vendor;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -102,7 +102,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PLATFORM_WINDOWS;BUILD_DLL;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src\vendor\spdlog;include;src\Vendor;src\Opengl;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src\vendor\spdlog;include;src\Vendor;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
@@ -123,7 +123,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PLATFORM_WINDOWS;BUILD_DLL;GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src\vendor\spdlog;include;src\Vendor;src\Opengl;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src\vendor\spdlog;include;src\Vendor;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
@@ -149,17 +149,24 @@
     <ClInclude Include="src\Events\Event.h" />
     <ClInclude Include="src\Events\EventDispatcher.h" />
     <ClInclude Include="src\Events\InputEvents.h" />
-    <ClInclude Include="src\Graphics\VirtualCamera.h" />
+    <ClInclude Include="src\Game\LevelGeneration.h" />
+    <ClInclude Include="src\Game\World.h" />
+    <ClInclude Include="src\Graphics\Camera\VirtualCamera.h" />
+    <ClInclude Include="src\Graphics\Image.h" />
+    <ClInclude Include="src\Opengl\Renderer.h" />
     <ClInclude Include="src\Math\Mat4.h" />
     <ClInclude Include="src\Math\Quaternion.h" />
     <ClInclude Include="src\Math\Vec2.h" />
     <ClInclude Include="src\Math\Vec3.h" />
     <ClInclude Include="src\Math\Vec4.h" />
+    <ClInclude Include="src\Opengl\Mesh.h" />
+    <ClInclude Include="src\Opengl\Debug.h" />
+    <ClInclude Include="src\Opengl\Texture.h" />
     <ClInclude Include="src\RenderBox.h" />
     <ClInclude Include="src\Utility\FunctionTimer.h" />
     <ClInclude Include="src\Utility\Log.h" />
     <ClInclude Include="src\Utility\Time.h" />
-    <ClInclude Include="src\opengl\glShader.h" />
+    <ClInclude Include="src\Opengl\Shader.h" />
     <ClInclude Include="src\vendor\imgui\imconfig.h" />
     <ClInclude Include="src\vendor\imgui\imgui.h" />
     <ClInclude Include="src\vendor\imgui\imgui_impl_glfw.h" />
@@ -223,16 +230,23 @@
     <ClCompile Include="src\Application\Application.cpp" />
     <ClCompile Include="src\Application\Input.cpp" />
     <ClCompile Include="src\Application\Window.cpp" />
-    <ClCompile Include="src\Graphics\VirtualCamera.cpp" />
+    <ClCompile Include="src\Game\LevelGeneration.cpp" />
+    <ClCompile Include="src\Game\World.cpp" />
+    <ClCompile Include="src\Graphics\Camera\VirtualCamera.cpp" />
+    <ClCompile Include="src\Graphics\Image.cpp" />
+    <ClCompile Include="src\Opengl\Renderer.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Math\Mat4.cpp" />
     <ClCompile Include="src\Math\Quaternion.cpp" />
     <ClCompile Include="src\Math\Vec2.cpp" />
     <ClCompile Include="src\Math\Vec3.cpp" />
     <ClCompile Include="src\Math\Vec4.cpp" />
+    <ClCompile Include="src\Opengl\Mesh.cpp" />
+    <ClCompile Include="src\Opengl\Debug.cpp" />
+    <ClCompile Include="src\Opengl\Texture.cpp" />
     <ClCompile Include="src\Utility\Log.cpp" />
     <ClCompile Include="src\Utility\Time.cpp" />
-    <ClCompile Include="src\opengl\glShader.cpp" />
+    <ClCompile Include="src\Opengl\Shader.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_demo.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_draw.cpp" />

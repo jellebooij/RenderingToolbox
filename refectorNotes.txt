@@ -1,6 +1,6 @@
 - Event dispatcher and Event callback system are (in theory) very slow. This is mainly caused by the use of std::function and std::Bind
 - Switch camera to transform component when i have that 
-
+- the ogl debugging is kinda shit
 
 
 
@@ -8,3 +8,8 @@
 Problems:
 
 Can't pause because of glfwSwapBuffers(window) in window->update function.
+
+
+TODO: 
+
+delta time should only update whenever the game is actualy life (in a interacive real time state) otherwise, delta time should be reset

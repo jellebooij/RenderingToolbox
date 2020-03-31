@@ -57,6 +57,11 @@ namespace Rb {
 		return *this;
 	}
 
+	float* Mat4::DataPointer() const
+	{
+		return (float*)data;
+	}
+
 	Mat4 Mat4::Orthographic(float left, float right, float bottom, float top, float near, float far)
 	{
 		Mat4 orthoMat;

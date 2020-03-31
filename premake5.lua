@@ -29,10 +29,7 @@ project "RenderBox"
     {
         "%{prj.name}/src/vendor/spdlog",
         "%{prj.name}/include",
-
         "%{prj.name}/src/Vendor",
-        "%{prj.name}/src/Opengl",
-
         "%{prj.name}/src"
     }
 
@@ -94,7 +91,6 @@ project "Game"
         "RenderBox/src",
         "RenderBox/src/Vendor",
         "RenderBox/include",
-        "Hazel/src/Opengl"
     }
     
     links

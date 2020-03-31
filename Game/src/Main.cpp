@@ -3,7 +3,7 @@
 class Game : public Rb::Application {
 public:	
 	Game() {
-
+		
 	}
 
 	~Game() {

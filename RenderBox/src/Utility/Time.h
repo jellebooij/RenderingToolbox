@@ -13,6 +13,7 @@ namespace Rb {
 
 	private:
 
+		void Init();
 		void Update();
 	};
 

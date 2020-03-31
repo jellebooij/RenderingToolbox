@@ -13,7 +13,7 @@ namespace Rb {
 		rotation = Quaternion::Identity();
 
 		projectionMatrix = Mat4::Perspective(fov, aspectRatio, nearPlane, farPlane);
-		viewMatrix = Mat4::Translate(position) * Mat4::Rotate(rotation);
+		viewMatrix = Mat4::Translate(-position) * Mat4::Rotate(rotation);
 
 	}
 
@@ -24,19 +24,18 @@ namespace Rb {
 
 	Mat4 VirtualCamera::GetViewMatrix()
 	{
+		viewMatrix = Mat4::Translate(-position) * Mat4::Rotate(rotation);
 		return viewMatrix;
 	}
 
 	void VirtualCamera::SetPosition(const Vec3 & position)
 	{
 		this->position = position;
-		viewMatrix = Mat4::Translate(position) * Mat4::Rotate(rotation);
 	}
 
 	void VirtualCamera::SetRotation(const Quaternion & rotation)
 	{
 		this->rotation = rotation;
-		viewMatrix = Mat4::Translate(position) * Mat4::Rotate(rotation);
 	}
 
 	void VirtualCamera::Translate(const Vec3 & translation)
@@ -44,16 +43,14 @@ namespace Rb {
 
 		Vec4 trans(translation);
 
-		trans = trans.Multiply(viewMatrix);
+		trans = trans.Multiply(Mat4::Rotate(rotation));
 
 		this->position += Vec3(trans.x, trans.y, trans.z);
-		viewMatrix = Mat4::Translate(position) * Mat4::Rotate(rotation);
 	}
 
 	void VirtualCamera::Rotate(const Quaternion & rotation)
 	{
 		this->rotation *= rotation;
-		viewMatrix = Mat4::Translate(position) * Mat4::Rotate(rotation);
 	}
 
 }

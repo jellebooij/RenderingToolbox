@@ -23,7 +23,7 @@ namespace Rb {
 
 		Mat4& Multiply(const Mat4& a);
 
-		float* DataPointer() { return data; }
+		float* DataPointer() const;
 
 		static Mat4 Orthographic(float left, float right, float bottom, float top, float near, float far);
 		static Mat4 Perspective(float fov, float aspectRatio, float near, float far);

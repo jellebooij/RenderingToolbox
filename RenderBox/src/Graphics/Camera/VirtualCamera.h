@@ -3,7 +3,7 @@
 
 namespace Rb {
 
-	class RB_API VirtualCamera {
+	class VirtualCamera {
 	public:
 		VirtualCamera();
 
@@ -15,6 +15,8 @@ namespace Rb {
 
 		void Translate(const Vec3& translation);
 		void Rotate(const Quaternion& rotation);
+		
+		Vec3 position;
 
 	private:
 
@@ -23,7 +25,7 @@ namespace Rb {
 		float nearPlane;
 		float farPlane;
 
-		Vec3 position;
+		
 		Quaternion rotation;
 
 		Mat4 projectionMatrix;
